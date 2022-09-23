@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Partido } from 'src/app/model/partido';
+import { PartidosService } from 'src/app/service/partidos.service';
 
 @Component({
   selector: 'app-registrardumb',
@@ -7,16 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrardumbComponent implements OnInit {
 
-  login: string;
-  senha: string;
+  @Input() partidos: Partido[];
+  @Output() selecionar = new EventEmitter();
+  @Output() voltar = new EventEmitter();
 
-  constructor() { }
+  partidoSelecionado: Partido;
+
+  constructor(private partidoServices: PartidosService) { }
 
   ngOnInit(): void {
   }
 
-  onLogar() {
+  onSelecionar(partido: Partido) {
+    this.partidoSelecionado = partido;
+    this.selecionar.emit(partido);
+  }
 
+  onVoltar() {
+    this.voltar.emit();
   }
 
 }

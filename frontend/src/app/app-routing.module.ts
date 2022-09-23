@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
-  { path: 'registrar', component: RegistrarComponent },
+  { path: 'registrar', loadChildren: () => import('./components/registrar/registrar.module').then(m => m.RegistrarModule) },
 ];
 
 @NgModule({

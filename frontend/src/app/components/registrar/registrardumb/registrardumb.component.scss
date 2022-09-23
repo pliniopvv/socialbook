@@ -1,7 +1,7 @@
 .centralflex {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 @media screen and (max-width: 500px) {
@@ -10,4 +10,12 @@
   .w-50 {
     width: 90% !important;
   }
+}
+
+.hover:hover {
+  background-color: #ccc;
+}
+
+.selected {
+  background-color: #fcc;
 }
