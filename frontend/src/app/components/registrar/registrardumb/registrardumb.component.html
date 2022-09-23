@@ -1,0 +1,25 @@
+<div class="centralflex h-100">
+  <div class="card w-50">
+    <div class="card-body">
+      <div class="m-auto" style="width: 100px;">
+        <img src="/assets/flor_cores3.png" alt="" width="100px" height="100px">
+      </div>
+      <div class="mb-3">
+        <label for="login" class="form-label">Login</label>
+        <input [(ngModel)]="login" type="email" class="form-control" id="login" placeholder="name@example.com">
+      </div>
+      <div class="mb-3">
+        <label for="senha" class="form-label">Telefone</label>
+        <input [(ngModel)]="senha" type="number" class="form-control" id="senha" placeholder="12345">
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary" (click)="onLogar()">Solicitar</button>
+        </div>
+        <div class="col">
+          <a [routerLink]="[ '/login' ]">Logar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

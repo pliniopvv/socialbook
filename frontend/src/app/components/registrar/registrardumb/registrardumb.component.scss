@@ -1,0 +1,13 @@
+.centralflex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+@media screen and (max-width: 500px) {
+  .centralflex {
+  }
+  .w-50 {
+    width: 90% !important;
+  }
+}
