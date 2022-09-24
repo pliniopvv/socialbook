@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { LoginDumbComponent } from './components/login/dumb/dumb.component';
 import { MenuDumbComponent } from './components/menu/dumb/dumb.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PrimeIcons } from 'primeng/api';
+import { ComumModule } from './modules/comum/comum.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     FormsModule,
+    ComumModule,
     RegistrarModule,
     HomeModule,
     ReactiveFormsModule,

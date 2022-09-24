@@ -24,7 +24,10 @@
         {{feed.usuario.partido.sigla}} - {{feed.usuario.apelido}} <span class="badge bg-secondary">{{feed.create_at | date : 'dd/MM/yyyy HH:mm' }}</span>
       </div>
       <div class="card-body" (click)="openPost(feed.id)">
-        {{feed.texto}}
+        <p>{{feed.texto}}</p>
+        <div class="d-flex justify-content-center">
+          <i class="pi pi-comments mt-1"></i><span class="badge bg-primary">{{ feed.comments?.length == null ? "0" : feed.comments.length  }}</span>
+        </div>
       </div>
       <!-- <div class="card-footer">
         {{feed.create_at | date : 'dd/MM/yyyy HH:mm' }}

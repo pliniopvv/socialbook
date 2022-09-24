@@ -5,4 +5,5 @@ export class Feed {
   usuario: Usuario;
   texto: string;
   create_at: Date;
+  comments: Feed[] | null;
 }
