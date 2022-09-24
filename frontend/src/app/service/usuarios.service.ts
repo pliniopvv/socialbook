@@ -1,3 +1,4 @@
+import { Partido } from 'src/app/model/partido';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../model/usuario';
 
@@ -10,6 +11,7 @@ export class UsuariosService {
     id: 0,
     login: "gangss2@hotmail.com",
     nome: "Plínio Victor",
+    apelido: "Gangss",
     senha: "12345",
     partido: {
       id: 0,
@@ -28,6 +30,23 @@ export class UsuariosService {
 
   get() {
     return this.usuarios;
+  }
+
+  usuarioLogado() {
+    return {
+      id: 0,
+      login: "gangss2@hotmail.com",
+      nome: "Plínio Victor",
+      apelido: "Gangss",
+      senha: "12345",
+      partido: {
+        id: 0,
+        nome: "Partido da Social Democracia Brasileira",
+        numero: 45,
+        sigla: "PSDB",
+        bandeira: 'psdb.png'
+      } as Partido
+    } as Usuario;
   }
 
   delete(id: number) {
