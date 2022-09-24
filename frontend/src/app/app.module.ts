@@ -1,3 +1,4 @@
+import { HomeModule } from './components/home/home.module';
 import { RegistrarModule } from './components/registrar/registrar.module';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginComponent } from './components/login/login.component';
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     FormsModule,
     RegistrarModule,
+    HomeModule,
     ReactiveFormsModule,
     AppRoutingModule
   ],

@@ -1,27 +1,103 @@
 <div class="container centralizado">
-  <div class="card w-100">
-    <div class="card-body">
-      <h1>Selecione o partido de ingresso:</h1>
-    </div>
-    <div class="card-body">
-        <ng-container *ngFor="let partido of partidos">
-          <div class="row hover" (click)="onSelecionar(partido)" [ngClass]="{ 'selected': partido.id == partidoSelecionado?.id }">
+
+
+
+   <!-- PÁGINA 0 -->
+    <ng-container *ngIf="paginacao == 0;">
+      <div class="card w-100">
+        <div class="card-body">
+          <div class="m-auto" style="width: 100px;">
+            <img src="/assets/flor_cores3.png" alt="" width="100px" height="100px">
+          </div>
+        </div>
+        <div class="card-body">
+          <h1>Selecione o partido de ingresso:</h1>
+        </div>
+        <div class="card-body">
+            <ng-container *ngFor="let partido of partidos">
+              <div class="row hover" (click)="onSelecionar(partido)" [ngClass]="{ 'selected': partido.id == partidoSelecionado?.id }">
+                <div class="col">
+                  <img src="/assets/bandeiras/{{partido.bandeira}}" alt="" width="75" height="75">
+                </div>
+                <div class="col">
+                  <div class="row">{{partido.sigla}}</div>
+                  <div class="row">{{partido.numero}}</div>
+                  <div class="row">{{partido.nome}}</div>
+                </div>
+              </div>
+            </ng-container>
+        </div>
+        <div class="card-body">
+          <div class="d-grid">
+            <button class="btn btn-primary" (click)="onVoltar()">Voltar</button>
+            <button class="btn btn-primary mt-1" (click)="proximaPagina()">Próximo</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <!-- PÁGINA 1  -->
+    <ng-container *ngIf="paginacao == 1">
+      <div class="card w-100">
+        <div class="card-body">
+          <div class="m-auto" style="width: 100px;">
+            <img src="/assets/flor_cores3.png" alt="" width="100px" height="100px">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row formulario-control">
             <div class="col">
-              <img src="/assets/bandeiras/{{partido.bandeira}}" alt="" width="75" height="75">
+              <div class="mb-3">
+                <label for="login" class="form-label">Login</label>
+                <input [(ngModel)]="login" type="email" class="form-control" id="login" placeholder="name@example.com">
+              </div>
             </div>
             <div class="col">
-              <div class="row">{{partido.sigla}}</div>
-              <div class="row">{{partido.numero}}</div>
-              <div class="row">{{partido.nome}}</div>
+              <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone (Whatsapp)</label>
+                <input [(ngModel)]="telefone" type="text" class="form-control" id="telefone" placeholder="">
+              </div>
             </div>
           </div>
-        </ng-container>
-    </div>
-    <div class="card-body">
-      <div class="d-grid">
-        <button class="btn btn-primary" (click)="onVoltar()">Voltar</button>
-        <button class="btn btn-primary mt-1">Próximo</button>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input [(ngModel)]="nome" type="text" class="form-control" id="nome" placeholder="">
+              </div>
+            </div>
+          </div>
+          <div class="row formulario-control">
+            <div class="col">
+              <div class="mb-3">
+                <label for="senha" class="form-label">Senha</label>
+                <input [(ngModel)]="senha" type="password" class="form-control" id="senha" placeholder="Digite uma senha">
+              </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <label for="senha" class="form-label">Repita a Senha</label>
+                <input [(ngModel)]="senha2" type="password" class="form-control" id="senha2" placeholder="Repita a senha">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <input type="file" [(ngModel)]="foto" id="foto">
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="d-grid">
+            <button class="btn btn-primary" (click)="onVoltar()">Voltar</button>
+            <button class="btn btn-primary mt-1" (click)="proximaPagina()">{{ paginacao != 1 ? "Próximo" : "Solicitar cadastro" }}</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
+
   </div>
-</div>

@@ -4,5 +4,6 @@ export class Usuario {
   login: string;
   nome: string;
   senha: string;
+  profile: string;
   partido: Partido;
 }

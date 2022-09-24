@@ -10,6 +10,13 @@
   .w-50 {
     width: 90% !important;
   }
+  .formulario-control {
+    display: flex;
+    flex-direction: column;
+  }
+  .col {
+    width: 100vw;
+  }
 }
 
 .hover:hover {

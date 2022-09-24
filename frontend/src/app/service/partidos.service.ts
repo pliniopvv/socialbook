@@ -23,7 +23,16 @@ export class PartidosService {
 
   constructor() { }
 
+  create(partido: Partido) {
+    this.partidos.push(partido);
+  }
+
   get() {
     return this.partidos;
   }
+
+  find(id: number) {
+    return this.partidos.find(p => p.id == id);
+  }
+
 }
