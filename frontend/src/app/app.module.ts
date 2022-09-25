@@ -10,8 +10,8 @@ import { AppComponent } from './app.component';
 import { LoginDumbComponent } from './components/login/dumb/dumb.component';
 import { MenuDumbComponent } from './components/menu/dumb/dumb.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PrimeIcons } from 'primeng/api';
 import { ComumModule } from './modules/comum/comum.module';
+import { FeedModule } from './components/feed/feed.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import { ComumModule } from './modules/comum/comum.module';
     RegistrarModule,
     HomeModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FeedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

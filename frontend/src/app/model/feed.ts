@@ -1,3 +1,4 @@
+import { Comments } from "./comments";
 import { Usuario } from "./usuario";
 
 export class Feed {
@@ -5,5 +6,6 @@ export class Feed {
   usuario: Usuario;
   texto: string;
   create_at: Date;
-  comments: Feed[] | null;
+  comments: Comments[] | null;
+  // parent: Feed | null;
 }

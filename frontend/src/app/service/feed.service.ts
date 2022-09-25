@@ -33,8 +33,12 @@ export class FeedService {
 
   constructor() { }
 
-  get() {
+  get(): Feed[] {
     return this.feed;
+  }
+
+  find(id: number): Feed {
+    return this.feed.find(p => p.id == id);
   }
 
   create(feed: Feed) {

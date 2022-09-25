@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { debug } from 'src/app/utils/utils.tools';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feed } from 'src/app/model/feed';
@@ -18,7 +19,9 @@ export class HomedumbComponent implements OnInit {
   feeds: Feed[];
   post: string;
 
-  constructor(private feedService: FeedService, private usuarioService: UsuariosService) { }
+  constructor(private feedService: FeedService,
+    private router: Router,
+    private usuarioService: UsuariosService) { }
 
   ngOnInit(): void {
     this.feeds = this.feedService.get();
@@ -39,6 +42,7 @@ export class HomedumbComponent implements OnInit {
   }
 
   openPost(id: number) {
+    this.router.navigate([`feed/${id}`])
     debug('Abrir postagem: ', id);
   }
 

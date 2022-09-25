@@ -1,0 +1,48 @@
+<div class="navbar bg-primary">
+  <button class="btn btn-primary" (click)="onVoltar()">
+    <i class="pi pi-arrow-left"></i> Voltar
+  </button>
+</div>
+
+<div class="container">
+
+  <!-- Feed -->
+  <div class="card mt-1">
+    <div class="card-header">
+      <img src="/assets/bandeiras/{{feed.usuario.partido.bandeira}}" alt="" width="25" height="25">
+      {{feed.usuario.partido.sigla}} - {{feed.usuario.apelido}} <span class="badge bg-secondary">{{feed.create_at | date : 'dd/MM/yyyy HH:mm' }}</span>
+    </div>
+    <div class="card-body">
+      <p>{{feed.texto}}</p>
+    </div>
+  </div>
+
+  <!-- Comments -->
+  <ng-container *ngFor="let comment of comments">
+    <div class="card mt-1">
+      <div class="card-header">
+        <img src="/assets/bandeiras/{{comment.usuario.partido.bandeira}}" alt="" width="25" height="25">
+        {{comment.usuario.partido.sigla}} - {{comment.usuario.apelido}} <span class="badge bg-secondary">{{comment.create_at | date : 'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="card-body">
+        <p>{{comment.texto}}</p>
+      </div>
+    </div>
+  </ng-container>
+
+    <!-- Input -->
+    <div class="card mt-1">
+      <div class="card-header">
+        Nova postagem:
+      </div>
+      <div class="card-body">
+        <textarea [(ngModel)]="post" class="form-control" cols="30" rows="2"></textarea>
+        <div class="d-grid">
+          <button class="btn btn-primary" (click)="onPostar()">
+            Postar
+          </button>
+        </div>
+      </div>
+    </div>
+
+</div>

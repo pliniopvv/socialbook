@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registrar', loadChildren: () => import('./components/registrar/registrar.module').then(m => m.RegistrarModule) },
   { path: 'home', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule) },
+  { path: 'feed', loadChildren: () => import('./components/feed/feed.module').then(m => m.FeedModule) },
 ];
 
 @NgModule({
