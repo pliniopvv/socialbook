@@ -17,7 +17,7 @@ export class HomedumbComponent implements OnInit {
   @Output() postar = new EventEmitter();
 
   feeds: Feed[];
-  post: string;
+  post: string = "";
 
   constructor(private feedService: FeedService,
     private router: Router,
@@ -29,7 +29,7 @@ export class HomedumbComponent implements OnInit {
 
   private count = 1;
   onPostar() {
-    if (this.post.length < 3)
+    if (this.post?.length < 3)
       return;
 
     let feed = new Feed();
