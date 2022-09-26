@@ -22,13 +22,13 @@ import { FeedModule } from './components/feed/feed.module';
     MenuDumbComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     FormsModule,
     ComumModule,
     RegistrarModule,
     HomeModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     FeedModule
   ],
   providers: [],
