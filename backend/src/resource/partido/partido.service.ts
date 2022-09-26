@@ -1,26 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { PARTIDO_REPOSITORY } from 'src/database/index.repository';
+import { Repository } from 'typeorm';
 import { CreatePartidoDto } from './dto/create-partido.dto';
 import { UpdatePartidoDto } from './dto/update-partido.dto';
+import { Partido } from './entities/partido.entity';
 
 @Injectable()
 export class PartidoService {
+
+  constructor(
+    @Inject(PARTIDO_REPOSITORY)
+    private partidoRepository: Repository<Partido>
+  ) {}
+ 
   create(createPartidoDto: CreatePartidoDto) {
-    return 'This action adds a new partido';
+    return this.partidoRepository.create(createPartidoDto);
   }
 
   findAll() {
-    return `This action returns all partido`;
+    return this.partidoRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} partido`;
+    return this.partidoRepository.findOneBy({ id });
   }
 
   update(id: number, updatePartidoDto: UpdatePartidoDto) {
-    return `This action updates a #${id} partido`;
+    return this.partidoRepository.update({id}, updatePartidoDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} partido`;
+    return this.partidoRepository.delete({id});
   }
 }

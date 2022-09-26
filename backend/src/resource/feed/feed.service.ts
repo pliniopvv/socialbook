@@ -1,26 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { FEED_REPOSITORY } from 'src/database/index.repository';
+import { Repository } from 'typeorm';
 import { CreateFeedDto } from './dto/create-feed.dto';
 import { UpdateFeedDto } from './dto/update-feed.dto';
+import { Feed } from './entities/feed.entity';
 
 @Injectable()
 export class FeedService {
+  constructor(
+    @Inject(FEED_REPOSITORY)
+    private usuarioRepository: Repository<Feed>
+  ) {}
+
   create(createFeedDto: CreateFeedDto) {
-    return 'This action adds a new feed';
+    return this.usuarioRepository.create(createFeedDto);
   }
 
   findAll() {
-    return `This action returns all feed`;
+    return this.usuarioRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} feed`;
+    return this.usuarioRepository.findOneBy({ id });
   }
 
   update(id: number, updateFeedDto: UpdateFeedDto) {
-    return `This action updates a #${id} feed`;
+    return this.usuarioRepository.update({id}, updateFeedDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} feed`;
+    return this.usuarioRepository.delete({id});
   }
 }
