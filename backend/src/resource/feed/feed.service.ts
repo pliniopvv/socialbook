@@ -1,34 +1,44 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { FEED_REPOSITORY } from 'src/database/index.repository';
-import { Repository } from 'typeorm';
+import { Usuario } from 'src/resource/usuario/entities/usuario.entity';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { CreateFeedDto } from './dto/create-feed.dto';
 import { UpdateFeedDto } from './dto/update-feed.dto';
 import { Feed } from './entities/feed.entity';
 
 @Injectable()
 export class FeedService {
+  
+  private feedRepository: Repository<Feed>;
+  
   constructor(
-    @Inject(FEED_REPOSITORY)
-    private usuarioRepository: Repository<Feed>
-  ) {}
+    private dataSource: DataSource
+  ) {
+    this.feedRepository = dataSource.getRepository(Feed);
+  }
 
   create(createFeedDto: CreateFeedDto) {
-    return this.usuarioRepository.create(createFeedDto);
+    let f = new Feed();
+    f.texto = createFeedDto.texto; 
+    f.usuario = createFeedDto.usuario; 
+    f.create_at = new Date();
+
+    return this.dataSource.manager.save(f);
   }
 
   findAll() {
-    return this.usuarioRepository.find();
+    return this.feedRepository.find();
   }
 
   findOne(id: number) {
-    return this.usuarioRepository.findOneBy({ id });
+    return this.feedRepository.findOneBy({ id });
   }
 
   update(id: number, updateFeedDto: UpdateFeedDto) {
-    return this.usuarioRepository.update({id}, updateFeedDto);
+    return this.feedRepository.update({id}, updateFeedDto);
   }
 
   remove(id: number) {
-    return this.usuarioRepository.delete({id});
+    return this.feedRepository.delete({id});
   }
 }

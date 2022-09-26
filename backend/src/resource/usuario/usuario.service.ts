@@ -1,20 +1,31 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { USUARIO_REPOSITORY } from 'src/database/index.repository';
-import { Repository } from 'typeorm';
-import { Partido } from '../partido/entities/partido.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
+import { Repository, DataSource } from 'typeorm';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { Usuario } from './entities/usuario.entity';
 
 @Injectable()
 export class UsuarioService {
 
+  private usuarioRepository: Repository<Usuario>;
+
   constructor(
-    @Inject(USUARIO_REPOSITORY)
-    private usuarioRepository: Repository<Partido>
-) {}
+    private dataSource: DataSource
+  ) {
+    this.usuarioRepository = dataSource.getRepository(Usuario);
+  }
 
   create(createUsuarioDto: CreateUsuarioDto) {
-    return this.usuarioRepository.create(createUsuarioDto);
+    let u = new Usuario();
+    u.apelido = createUsuarioDto.apelido;
+    u.login = createUsuarioDto.login; 
+    u.nome = createUsuarioDto.nome; 
+    u.partido = createUsuarioDto.partido;
+    u.profile = createUsuarioDto.profile; 
+    u.senha = createUsuarioDto.senha; 
+
+    return this.dataSource.manager.save(u);
   }
 
   findAll() {

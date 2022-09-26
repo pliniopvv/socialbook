@@ -2,10 +2,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PartidoService } from './partido.service';
 import { CreatePartidoDto } from './dto/create-partido.dto';
 import { UpdatePartidoDto } from './dto/update-partido.dto';
+import { debug } from 'console';
+import { DataSource } from 'typeorm';
+import { Partido } from './entities/partido.entity';
 
 @Controller('partido')
 export class PartidoController {
-  constructor(private readonly partidoService: PartidoService) {}
+  constructor(private partidoService: PartidoService) {}
 
   @Post()
   create(@Body() createPartidoDto: CreatePartidoDto) {

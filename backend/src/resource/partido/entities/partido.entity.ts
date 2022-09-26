@@ -1,11 +1,11 @@
-import { Usuario } from "src/resource/usuario/entities/usuario.entity";
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Partido {
 
     @PrimaryGeneratedColumn()
     id: number;
+    
     @Column()
     nome: string;
     @Column()
@@ -15,6 +15,6 @@ export class Partido {
     @Column()
     bandeira: string;
 
-    @ManyToOne((type) => Usuario, (usuario) => usuario.partido)
-    usuario: Usuario;
+    // @OneToMany((type) => Usuario, (usuario) => usuario.partido)
+    // usuarios: Usuario[];
 }

@@ -1,3 +1,4 @@
+import { Feed } from 'src/resource/feed/entities/feed.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Usuario } from "src/resource/usuario/entities/usuario.entity";
 
@@ -13,5 +14,5 @@ export class CreateCommentDto {
   create_at: Date = new Date();
 
   @ApiProperty()
-  feedId: number;
+  feed: Feed;
 }

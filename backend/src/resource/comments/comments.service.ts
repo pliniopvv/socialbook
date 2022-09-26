@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { COMMENTS_REPOSITORY } from 'src/database/index.repository';
-import { Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Comments } from './entities/comments.entity';
@@ -8,13 +8,22 @@ import { Comments } from './entities/comments.entity';
 @Injectable()
 export class CommentsService {
 
+  private commentsRepository: Repository<Comments>;
+
   constructor(
-    @Inject(COMMENTS_REPOSITORY)
-    private commentsRepository: Repository<Comments>
-) {}
+    private dataSource: DataSource
+  ) {
+    this.commentsRepository = dataSource.getRepository(Comments);
+  }
 
   create(createCommentDto: CreateCommentDto) {
-    return this.commentsRepository.create(createCommentDto);
+    let c = new Comments();
+    c.feed = createCommentDto.feed;
+    c.texto = createCommentDto.texto;
+    c.usuario = createCommentDto.usuario;
+    c.create_at = new Date();
+    
+    return this.commentsRepository.create(c);
   }
 
   findAll() {

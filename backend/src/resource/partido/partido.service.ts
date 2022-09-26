@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { PARTIDO_REPOSITORY } from 'src/database/index.repository';
-import { Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreatePartidoDto } from './dto/create-partido.dto';
 import { UpdatePartidoDto } from './dto/update-partido.dto';
 import { Partido } from './entities/partido.entity';
@@ -8,13 +8,21 @@ import { Partido } from './entities/partido.entity';
 @Injectable()
 export class PartidoService {
 
+  private partidoRepository: Repository<Partido>;
+
   constructor(
-    @Inject(PARTIDO_REPOSITORY)
-    private partidoRepository: Repository<Partido>
-  ) {}
+    private dataSource: DataSource
+  ) {
+    this.partidoRepository = dataSource.getRepository(Partido);
+  }
  
   create(createPartidoDto: CreatePartidoDto) {
-    return this.partidoRepository.create(createPartidoDto);
+    let p = new Partido();
+    p.bandeira = createPartidoDto.bandeira;
+    p.nome = createPartidoDto.nome;
+    p.numero = createPartidoDto.numero;
+    p.sigla = createPartidoDto.sigla;
+    return this.dataSource.manager.save(p);
   }
 
   findAll() {
