@@ -1,30 +1,38 @@
-import { debug } from 'src/app/utils/utils.tools';
 import { Injectable } from '@angular/core';
 import { Comments } from '../model/comments';
 import { FeedService } from './feed.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Usuario } from '../model/usuario';
+import { firstValueFrom } from 'rxjs';
+import { Feed } from '../model/feed';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentsService {
 
-  comments: Comments[] = [];
+  private API = `${environment.API}/comments`;
 
-  constructor(private feedService: FeedService) { }
+  constructor(private http: HttpClient, private feedService: FeedService) { }
 
-  get(): Comments[] {
-    return this.comments;
+  async create(comments: Comments) {
+    return await firstValueFrom(this.http.post<Comments>(this.API, comments));
+  }
+  async get() {
+    return await firstValueFrom(this.http.get<Comments[]>(this.API));
+  }
+  async find(id: number) {
+    return await firstValueFrom(this.http.get<Comments>(this.API+`/${id}`));
+  }
+  async findByFeed(id: number) {
+    return await firstValueFrom(this.http.get<Feed>(environment.API+`/feed/wd/${id}`));
+  }
+  async update(id: number, comments: Comments) {
+    return await firstValueFrom(this.http.patch<Comments>(this.API+`/${id}`, comments));
+  }
+  async delete(id: number) {
+    return await firstValueFrom(this.http.delete<Comments>(this.API+`/${id}`));
   }
 
-  findByFeed(id: number): Comments[] {
-    this.comments = this.feedService.find(id).comments;
-    if (!this.comments)
-      this.comments = [];
-    return this.comments;
-  }
-
-  create(comments: Comments) {
-    this.comments.push(comments);
-    debug('Comments', this.comments);
-  }
 }

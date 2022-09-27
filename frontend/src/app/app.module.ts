@@ -12,6 +12,8 @@ import { MenuDumbComponent } from './components/menu/dumb/dumb.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComumModule } from './modules/comum/comum.module';
 import { FeedModule } from './components/feed/feed.module';
+import { httpInterceptorProviders } from './core/auth';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,11 +29,12 @@ import { FeedModule } from './components/feed/feed.module';
     FormsModule,
     ComumModule,
     RegistrarModule,
+    HttpClientModule,
     HomeModule,
     ReactiveFormsModule,
     FeedModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

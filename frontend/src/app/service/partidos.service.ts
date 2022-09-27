@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Partido } from '../model/partido';
 
 @Injectable({
@@ -6,33 +9,24 @@ import { Partido } from '../model/partido';
 })
 export class PartidosService {
 
-  private partidos: Partido[] = [{
-    id: 0,
-    nome: "Partido da Social Democracia Brasileira",
-    numero: 45,
-    sigla: "PSDB",
-    bandeira: 'psdb.png'
-  },{
-    id: 1,
-    nome: "Partido dos Trabalhadores",
-    numero: 13,
-    sigla: "PT",
-    bandeira: 'pt.png'
+  private API = `${environment.API}/partido`;
+
+  constructor(private http: HttpClient) { }
+
+  async create(partido: Partido) {
+    return await firstValueFrom(this.http.post<Partido>(this.API, partido));
   }
-];
-
-  constructor() { }
-
-  create(partido: Partido) {
-    this.partidos.push(partido);
+  async get() {
+    return await firstValueFrom(this.http.get<Partido[]>(this.API));
   }
-
-  get() {
-    return this.partidos;
+  async find(id: number) {
+    return await firstValueFrom(this.http.get<Partido>(this.API+`/${id}`));
   }
-
-  find(id: number) {
-    return this.partidos.find(p => p.id == id);
+  async update(id: number, partido: Partido) {
+    return await firstValueFrom(this.http.patch<Partido>(this.API+`/${id}`, partido));
+  }
+  async delete(id: number) {
+    return await firstValueFrom(this.http.delete<Partido>(this.API+`/${id}`));
   }
 
 }

@@ -34,6 +34,12 @@ export class CommentsService {
     return this.commentsRepository.findOneBy({ id });
   }
 
+  findAllByFeed(id: number) {
+    return this.commentsRepository.find({where: {
+      feed: {id}
+    } });
+  }
+
   update(id: number, updateCommentDto: UpdateCommentDto) {
     return this.commentsRepository.update({id}, updateCommentDto);
   }

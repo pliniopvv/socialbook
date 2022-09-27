@@ -19,6 +19,8 @@ export class UsuarioController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+    if (id == 'me')
+      return this.usuarioService.findOne(1);
     return this.usuarioService.findOne(+id);
   }
 

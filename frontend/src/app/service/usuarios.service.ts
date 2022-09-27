@@ -1,61 +1,33 @@
 import { Partido } from 'src/app/model/partido';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../model/usuario';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
 
-  private usuarios = [{
-    id: 0,
-    login: "gangss2@hotmail.com",
-    nome: "Plínio Victor",
-    apelido: "Gangss",
-    senha: "12345",
-    partido: {
-      id: 0,
-      nome: "Partido da Social Democracia Brasileira",
-      numero: 45,
-      sigla: "PSDB",
-      bandeira: 'psdb.png'
-    }
-  }] as Usuario[];
+  private API = `${environment.API}/usuario`;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  create(usuario: Usuario) {
-    this.usuarios.push(usuario);
+  async create(usuario: Usuario) {
+    return await firstValueFrom(this.http.post<Usuario>(this.API, usuario));
   }
-
-  get() {
-    return this.usuarios;
+  async get() {
+    return await firstValueFrom(this.http.get<Usuario>(this.API));
   }
-
-  usuarioLogado() {
-    return {
-      id: 0,
-      login: "gangss2@hotmail.com",
-      nome: "Plínio Victor",
-      apelido: "Gangss",
-      senha: "12345",
-      partido: {
-        id: 0,
-        nome: "Partido da Social Democracia Brasileira",
-        numero: 45,
-        sigla: "PSDB",
-        bandeira: 'psdb.png'
-      } as Partido
-    } as Usuario;
+  async find(id: number) {
+    return await firstValueFrom(this.http.get<Usuario>(this.API+`/${id}`));
   }
-
-  delete(id: number) {
-    this.usuarios = this.usuarios.slice(
-      this.usuarios.indexOf(
-        this.usuarios.find(u => u.id == id)
-      ),
-        1
-    );
+  async update(id: number, usuario: Usuario) {
+    return await firstValueFrom(this.http.patch<Usuario>(this.API+`/${id}`, usuario));
+  }
+  async delete(id: number) {
+    return await firstValueFrom(this.http.delete<Usuario>(this.API+`/${id}`));
   }
 
 }

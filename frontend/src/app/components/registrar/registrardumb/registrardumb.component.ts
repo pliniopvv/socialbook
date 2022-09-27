@@ -25,6 +25,7 @@ export class RegistrardumbComponent implements OnInit {
   nome: string;
   telefone: string;
   foto: File;
+  apelido: string;
   senha: string;
   senha2: string;
   partidoSelecionado: Partido;
@@ -54,12 +55,15 @@ export class RegistrardumbComponent implements OnInit {
     u.login = this.login;
     u.nome = this.nome;
     u.senha = this.senha;
+    u.apelido = this.apelido;
     u.partido = this.partidoSelecionado;
 
     if (this.paginacao >= 1)
       this.selecionar.emit({
         login: this.login,
         foto: this.foto,
+        nome: this.nome,
+        apelido: this.apelido,
         telefone: this.telefone,
         senha: this.senha,
         partido: this.partidoSelecionado });

@@ -21,8 +21,8 @@ export class RegistrarComponent implements OnInit {
     private router: Router,
     ) { }
 
-  ngOnInit(): void {
-    this.partidos = this.partidoServices.get();
+  async ngOnInit(): Promise<void> {
+    this.partidos = await this.partidoServices.get();
   }
 
   // selecionarPartido(partido: Partido) {

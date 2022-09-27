@@ -1,49 +1,33 @@
-import { debug } from 'src/app/utils/utils.tools';
+import { firstValueFrom } from 'rxjs';
 import { Usuario } from 'src/app/model/usuario';
 import { Injectable } from '@angular/core';
 import { Feed } from '../model/feed';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedService {
 
-  private usuarioLogado = {
-    id: 0,
-    login: "gangss2@hotmail.com",
-    nome: "Plínio Victor",
-    apelido: "Gangss",
-    senha: "12345",
-    partido: {
-      id: 0,
-      nome: "Partido da Social Democracia Brasileira",
-      numero: 45,
-      sigla: "PSDB",
-      bandeira: 'psdb.png'
-    }
-  } as Usuario;
-  private feed = [
-    {
-      id: 0,
-      usuario: this.usuarioLogado,
-      texto: "Deu certo!",
-      create_at: new Date()
-    }
-  ] as Feed[];
+  private API = `${environment.API}/feed`;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  get(): Feed[] {
-    return this.feed;
+  async create(feed: Feed) {
+    return await firstValueFrom(this.http.post<Feed>(this.API, feed));
   }
-
-  find(id: number): Feed {
-    return this.feed.find(p => p.id == id);
+  async get() {
+    return await firstValueFrom(this.http.get<Feed[]>(this.API));
   }
-
-  create(feed: Feed) {
-    this.feed.push(feed);
-    debug(`Postado com sucesso: `, feed);
+  async find(id: number) {
+    return await firstValueFrom(this.http.get<Feed>(this.API+`/${id}`));
+  }
+  async update(id: number, feed: Feed) {
+    return await firstValueFrom(this.http.patch<Feed>(this.API+`/${id}`, feed));
+  }
+  async delete(id: number) {
+    return await (this.http.delete<Feed>(this.API+`/${id}`));
   }
 
 }

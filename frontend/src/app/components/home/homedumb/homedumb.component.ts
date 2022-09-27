@@ -5,6 +5,7 @@ import { Feed } from 'src/app/model/feed';
 import { Usuario } from 'src/app/model/usuario';
 import { FeedService } from 'src/app/service/feed.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 
 @Component({
   selector: 'app-homedumb',
@@ -21,23 +22,24 @@ export class HomedumbComponent implements OnInit {
 
   constructor(private feedService: FeedService,
     private router: Router,
+    private auth: AuthenticationService,
     private usuarioService: UsuariosService) { }
 
   ngOnInit(): void {
-    this.feeds = this.feedService.get();
+    this.feedService.get().then(feeds => {
+      this.feeds = feeds;
+    });
   }
 
-  private count = 1;
-  onPostar() {
+  async onPostar() {
     if (this.post?.length < 3)
       return;
 
     let feed = new Feed();
-    feed.id = this.count++;
     feed.texto = this.post;
     this.post = '';
     feed.create_at = new Date();
-    feed.usuario = this.usuarioService.usuarioLogado();
+    feed.usuario = await this.auth.getUsuario();
     this.postar.emit(feed);
   }
 
