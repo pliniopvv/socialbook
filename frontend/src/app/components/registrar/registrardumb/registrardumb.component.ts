@@ -2,7 +2,6 @@ import { Usuario } from './../../../model/usuario';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Partido } from 'src/app/model/partido';
 import { PartidosService } from 'src/app/service/partidos.service';
-import { environment } from 'src/environments/environment';
 import { debug, log } from 'src/app/utils/utils.tools';
 
 @Component({
@@ -24,7 +23,7 @@ export class RegistrardumbComponent implements OnInit {
   login: string;
   nome: string;
   telefone: string;
-  foto: File;
+  foto: FormData;
   apelido: string;
   senha: string;
   senha2: string;
@@ -49,26 +48,37 @@ export class RegistrardumbComponent implements OnInit {
   }
 
   proximaPagina() {
+    if (this.paginacao >= 1) {
+      let u = new Usuario();
 
-    let u = new Usuario();
+      u.login = this.login;
+      u.nome = this.nome;
+      u.senha = this.senha;
+      u.apelido = this.apelido;
+      u.partido = this.partidoSelecionado;
 
-    u.login = this.login;
-    u.nome = this.nome;
-    u.senha = this.senha;
-    u.apelido = this.apelido;
-    u.partido = this.partidoSelecionado;
-
-    if (this.paginacao >= 1)
-      this.selecionar.emit({
+      this.selecionar.emit([{
         login: this.login,
-        foto: this.foto,
         nome: this.nome,
         apelido: this.apelido,
         telefone: this.telefone,
         senha: this.senha,
-        partido: this.partidoSelecionado });
-    else
-      this.paginacao++;
+        partido: this.partidoSelecionado }, this.foto]);
+    } else
+        this.paginacao++;
+    }
+
+    onSelectFile(ft: Event) {
+      debug("registrardumb > ",ft);
+
+      // @ts-ignore
+      if (ft.srcElement.files.length > 0) {
+        // @ts-ignore
+        let arquivo = ft.srcElement.files[0] as File;
+        let form = new FormData();
+        form.append('foto', arquivo, arquivo.name)
+        this.foto = form;
+      }
     }
 
 }

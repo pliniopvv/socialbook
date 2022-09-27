@@ -94,7 +94,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <input type="file" [(ngModel)]="foto" id="foto">
+              <input type="file" (change)="onSelectFile($event)" id="foto">
             </div>
           </div>
         </div>
