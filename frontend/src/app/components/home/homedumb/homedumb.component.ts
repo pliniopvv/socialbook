@@ -16,19 +16,15 @@ export class HomedumbComponent implements OnInit {
 
   @Input() usuario: Usuario;
   @Output() postar = new EventEmitter();
+  @Input() feeds: Feed[];
 
-  feeds: Feed[];
   post: string = "";
 
-  constructor(private feedService: FeedService,
+  constructor(
     private router: Router,
-    private auth: AuthenticationService,
-    private usuarioService: UsuariosService) { }
+    private auth: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.feedService.get().then(feeds => {
-      this.feeds = feeds;
-    });
   }
 
   async onPostar() {
@@ -39,7 +35,8 @@ export class HomedumbComponent implements OnInit {
     feed.texto = this.post;
     this.post = '';
     feed.create_at = new Date();
-    feed.usuario = await this.auth.getUsuario();
+    feed.usuario = this.auth.getUsuario();
+    debug('postado > ',feed);
     this.postar.emit(feed);
   }
 

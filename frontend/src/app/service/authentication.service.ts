@@ -15,16 +15,16 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   async verify(login: string, senha: string) {
-    return await firstValueFrom(this.http.post<any>(this.API+'/verify',{login,senha}));
+    return await firstValueFrom(this.http.post<Usuario>(this.API+'/verify',{login,senha}));
   }
 
-  async getUsuario() {
+   getUsuario() {
     // return await firstValueFrom(this.http.get<Usuario>(this.API+`/me`));
-    return this.usuario;
+    return JSON.parse(sessionStorage.getItem('usuario'));
   }
 
-  async setUsuario(usuario: Usuario) {
-    this.usuario = usuario;
+   setUsuario(usuario: Usuario) {
+    sessionStorage.setItem('usuario',JSON.stringify(usuario));
   }
 
   async setToken(token: string) {

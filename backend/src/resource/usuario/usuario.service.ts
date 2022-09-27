@@ -19,11 +19,11 @@ export class UsuarioService {
   create(createUsuarioDto: CreateUsuarioDto) {
     let u = new Usuario();
     u.apelido = createUsuarioDto.apelido;
-    u.login = createUsuarioDto.login; 
-    u.nome = createUsuarioDto.nome; 
+    u.login = createUsuarioDto.login;
+    u.nome = createUsuarioDto.nome;
     u.partido = createUsuarioDto.partido;
-    u.profile = createUsuarioDto.profile; 
-    u.senha = createUsuarioDto.senha; 
+    u.foto = createUsuarioDto.foto;
+    u.senha = createUsuarioDto.senha;
 
     return this.dataSource.manager.save(u);
   }
@@ -34,6 +34,23 @@ export class UsuarioService {
 
   findOne(id: number) {
     return this.usuarioRepository.findOneBy({ id });
+  }
+
+  findOneWithPartido(id: number) {
+    return this.usuarioRepository.find({
+      where: {
+        id
+      }, relations: {
+        partido: true,
+      }
+    })
+  }
+
+  find(login:string, senha: string) {
+    return this.usuarioRepository.find({where: {
+      login,
+      senha
+    }});
   }
 
   update(id: number, updateUsuarioDto: UpdateUsuarioDto) {

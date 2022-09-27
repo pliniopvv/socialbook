@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Foto } from 'src/resource/foto/entities/foto.entity';
 import { Partido } from "src/resource/partido/entities/partido.entity";
 
 export class CreateUsuarioDto {
@@ -17,7 +18,7 @@ export class CreateUsuarioDto {
     senha: string;
 
     @ApiProperty()
-    profile: string;
+    foto: Foto[];
 
     @ApiProperty()
     partido: Partido;

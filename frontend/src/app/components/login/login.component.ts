@@ -17,8 +17,10 @@ export class LoginComponent implements OnInit {
 
   async logar(ev: any) {
     let { login , senha } = ev;
-    let r = await this.auth.verify(login, senha);
-    debug('login >' , r);
+    let usuario = await this.auth.verify(login, senha);
+    if (usuario)
+      this.auth.setUsuario(usuario)
+    debug('login >' , usuario);
     this.router.navigate(['home']);
   }
 

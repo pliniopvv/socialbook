@@ -1,6 +1,7 @@
 import { Feed } from "src/resource/feed/entities/feed.entity";
+import { Foto } from "src/resource/foto/entities/foto.entity";
 import { Partido } from "src/resource/partido/entities/partido.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Usuario {
@@ -9,6 +10,7 @@ export class Usuario {
     id: number;
     
     @Column()
+    @Index({unique: true})
     login: string;
     @Column()
     nome: string;
@@ -16,13 +18,14 @@ export class Usuario {
     apelido: string;
     @Column()
     senha: string;
-    @Column()
-    profile: string;
+
+    @OneToMany((type) => Foto, (foto) => foto.usuario)
+    foto: Foto[];
 
     @OneToMany((type) => Feed, (feed) => feed.usuario)
     feed: Feed[];
 
-    @ManyToOne((type) => Partido)
+    @ManyToOne((type) => Partido, { eager: true })
     @JoinColumn()
     partido: Partido;
 }

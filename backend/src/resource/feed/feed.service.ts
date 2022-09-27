@@ -27,7 +27,10 @@ export class FeedService {
   }
 
   findAll() {
-    return this.feedRepository.find();
+    return this.feedRepository.find({order: {
+        create_at: 'DESC'
+      }
+    });
   }
 
   findOne(id: number) {

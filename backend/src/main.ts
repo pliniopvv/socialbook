@@ -1,5 +1,8 @@
 import * as dotenv from "dotenv";
 dotenv.config({ path: '.env' });
+import { debug, env } from "./utils/utils.tools";
+let envfile = env('ENV');
+dotenv.config({path: envfile});
 
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';

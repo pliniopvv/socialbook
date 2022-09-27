@@ -1,5 +1,6 @@
 import { Comments } from 'src/resource/comments/entities/comments.entity';
 import { Feed } from 'src/resource/feed/entities/feed.entity';
+import { Foto } from 'src/resource/foto/entities/foto.entity';
 import { Partido } from 'src/resource/partido/entities/partido.entity';
 import { Usuario } from 'src/resource/usuario/entities/usuario.entity';
 import { env } from 'src/utils/utils.tools';
@@ -10,7 +11,7 @@ let DATABASE_MYSQL = env('DATABASE_MYSQL');
 let DATABASE_FILE = env('DATABASE_FILE');
 
 let databaseProviders;
-let Entities = [Usuario, Partido, Feed, Comments];
+let Entities = [Usuario, Partido, Feed, Comments, Foto];
 
 
 if (DATABASE == DATABASE_MYSQL) {
@@ -21,7 +22,7 @@ if (DATABASE == DATABASE_MYSQL) {
         username: 'root',
         password: 'root',
         database: 'test',
-        entities: [],
+        entities: Entities,
         synchronize: true,
       };
 } else {

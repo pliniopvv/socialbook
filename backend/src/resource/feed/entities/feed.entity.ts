@@ -8,7 +8,7 @@ export class Feed {
     @PrimaryGeneratedColumn()
     id: number;
     
-    @ManyToOne((type) => Usuario, (usuario) => usuario.feed)
+    @ManyToOne((type) => Usuario, (usuario) => usuario.feed, { eager: true })
     usuario: Usuario;
 
     @Column()
@@ -16,6 +16,6 @@ export class Feed {
     @Column()
     create_at: Date;
 
-    @OneToMany((type) => Comments, (comments) => comments.feed)
+    @OneToMany((type) => Comments, (comments) => comments.feed, { eager: true })
     comments: Comments[];
 }

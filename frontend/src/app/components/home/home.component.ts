@@ -9,13 +9,19 @@ import { FeedService } from 'src/app/service/feed.service';
 })
 export class HomeComponent implements OnInit {
 
+  feeds: Feed[];
+
   constructor(private feedService: FeedService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.feedService.get().then(feeds => {
+      this.feeds = feeds;
+    });
   }
 
-  postar(feed: Feed) {
-    this.feedService.create(feed);
+  async postar(feed: Feed) {
+    let _feed = await this.feedService.create(feed);
+    this.feeds = [_feed, ...this.feeds];
   }
 
 }
