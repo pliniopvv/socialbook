@@ -1,3 +1,4 @@
+import { debug } from 'src/app/utils/utils.tools';
 import { FeedService } from 'src/app/service/feed.service';
 import { Component, OnInit } from '@angular/core';
 import { Feed } from 'src/app/model/feed';
@@ -27,13 +28,16 @@ export class FeedComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     let id = this.aRoute.snapshot.params['id'];
     this.feed = await this.feedService.find(id);
-    this.comments = (await (await this.commentService.findByFeed(this.feed.id))).comments;
+    this.comments = await this.commentService.findByFeed(this.feed.id);
     this.feed.comments = this.comments;
     this.usuario = await this.auth.getUsuario();
   }
 
   postar(comment: Comments) {
-    this.commentService.create(comment);
+    this.commentService.create(comment).then(_comments => {
+        this.comments.push(_comments);
+        debug(this.comments);
+      });
   }
 
   voltar(ev: Event) {

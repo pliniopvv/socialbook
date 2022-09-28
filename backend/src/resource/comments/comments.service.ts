@@ -23,7 +23,7 @@ export class CommentsService {
     c.usuario = createCommentDto.usuario;
     c.create_at = new Date();
     
-    return this.commentsRepository.create(c);
+    return this.dataSource.manager.save(c);
   }
 
   findAll() {
@@ -35,9 +35,13 @@ export class CommentsService {
   }
 
   findAllByFeed(id: number) {
-    return this.commentsRepository.find({where: {
-      feed: {id}
-    } });
+      return this.commentsRepository.find({where: {
+        feed: {id}
+      },
+      relations: {
+        usuario: true,
+      } },
+    );
   }
 
   update(id: number, updateCommentDto: UpdateCommentDto) {

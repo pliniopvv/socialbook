@@ -26,7 +26,7 @@ export class CommentsService {
     return await firstValueFrom(this.http.get<Comments>(this.API+`/${id}`));
   }
   async findByFeed(id: number) {
-    return await firstValueFrom(this.http.get<Feed>(environment.API+`/feed/wd/${id}`));
+    return await firstValueFrom(this.http.get<Comments[]>(this.API+`/wd/${id}`));
   }
   async update(id: number, comments: Comments) {
     return await firstValueFrom(this.http.patch<Comments>(this.API+`/${id}`, comments));

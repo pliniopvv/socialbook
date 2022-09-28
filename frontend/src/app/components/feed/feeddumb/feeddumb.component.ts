@@ -2,6 +2,8 @@ import { Usuario } from 'src/app/model/usuario';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feed } from 'src/app/model/feed';
 import { Comments } from 'src/app/model/comments';
+import { debug } from 'src/app/utils/utils.tools';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 
 @Component({
   selector: 'app-feeddumb',
@@ -18,10 +20,9 @@ export class FeeddumbComponent implements OnInit {
   @Output() postar = new EventEmitter();
   @Output() voltar = new EventEmitter();
 
-  constructor() { }
+  constructor(private auth: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.comments = this.feed.comments;
   }
 
   private count = 1;
@@ -34,9 +35,9 @@ export class FeeddumbComponent implements OnInit {
     comment.texto = this.post;
     this.post = '';
     comment.create_at = new Date();
-    // comment.parent = this.comment;
-    comment.feedId = this.feed.id;
-    comment.usuario = this.usuario;
+    // @ts-ignore
+    comment.feed = { id: this.feed.id };
+    comment.usuario = this.auth.getUsuario();
     this.postar.emit(comment);
   }
 

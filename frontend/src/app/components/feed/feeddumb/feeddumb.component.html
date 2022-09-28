@@ -7,15 +7,22 @@
 <div class="container">
 
   <!-- Feed -->
-  <div class="card mt-1">
-    <div class="card-header">
-      <img src="/assets/bandeiras/{{feed.usuario.partido.bandeira}}" alt="" width="25" height="25">
-      {{feed.usuario.partido.sigla}} - {{feed.usuario.apelido}} <span class="badge bg-secondary">{{feed.create_at | date : 'dd/MM/yyyy HH:mm' }}</span>
+  <ng-container *ngIf="feed; else loading">
+    <div class="card mt-1">
+      <div class="card-header">
+        <img src="/assets/bandeiras/{{feed.usuario.partido.bandeira}}" alt="" width="25" height="25">
+        {{feed.usuario.partido.sigla}} - {{feed.usuario.apelido}} <span class="badge bg-secondary">{{feed.create_at | date : 'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="card-body">
+        <p>{{feed.texto}}</p>
+      </div>
     </div>
-    <div class="card-body">
-      <p>{{feed.texto}}</p>
+  </ng-container>
+  <ng-template #loading>
+    <div class="justify-content-center d-flex">
+      <i class="pi pi-spin pi-spinner"></i>
     </div>
-  </div>
+  </ng-template>
 
   <!-- Comments -->
   <ng-container *ngFor="let comment of comments">

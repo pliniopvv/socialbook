@@ -17,7 +17,7 @@ export class CommentsController {
     return this.commentsService.findAll();
   }
 
-  @Get('/wd/:id')
+  @Get('wd/:id')
   findAllByFeed(@Param('id') id: string) {
     return this.commentsService.findAllByFeed(parseInt(id));
   }
