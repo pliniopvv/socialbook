@@ -6,6 +6,7 @@ import { Usuario } from 'src/app/model/usuario';
 import { FeedService } from 'src/app/service/feed.service';
 import { UsuariosService } from 'src/app/service/usuarios.service';
 import { AuthenticationService } from 'src/app/service/authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-homedumb',
@@ -20,11 +21,19 @@ export class HomedumbComponent implements OnInit {
 
   post: string = "";
 
+  URL_PICTURE: string;
+
   constructor(
     private router: Router,
     private auth: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.URL_PICTURE = environment.URL_UPLOAD;
+    if (!this.usuario) {
+      this.usuario = this.auth.getUsuario();
+      if (!this.usuario)
+        this.router.navigate(['login']);
+    }
   }
 
   async onPostar() {

@@ -2,8 +2,8 @@ import { Usuario } from 'src/app/model/usuario';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feed } from 'src/app/model/feed';
 import { Comments } from 'src/app/model/comments';
-import { debug } from 'src/app/utils/utils.tools';
 import { AuthenticationService } from 'src/app/service/authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-feeddumb',
@@ -17,12 +17,15 @@ export class FeeddumbComponent implements OnInit {
   @Input() comments: Comments[];
   post: string;
 
+  URL_PICTURE: string;
+
   @Output() postar = new EventEmitter();
   @Output() voltar = new EventEmitter();
 
   constructor(private auth: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.URL_PICTURE = environment.URL_UPLOAD;
   }
 
   private count = 1;

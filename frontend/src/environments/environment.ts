@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   API: 'http://localhost:3000',
+  URL_UPLOAD: 'http://localhost:3000/foto',
   DEBUG: true
 };
 

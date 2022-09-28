@@ -1,6 +1,38 @@
 <div class="container">
 
 
+  <!-- Logado como -->
+  <ng-container *ngIf="usuario">
+    <div class="card mt-1">
+      <div class="card-header">
+        Logado como:
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <!-- FOTO -->
+            <ng-container *ngIf="usuario.fotos; else nopic">
+              <img src="{{ URL_PICTURE }}/{{ usuario.fotos[0] }}" class="" alt="" width="50" height="50">
+            </ng-container>
+            <ng-template #nopic>
+              <img src="./assets/nopic.jpeg" class="" alt="" width="50" height="50">
+            </ng-template>
+            <!-- FOTO F -->
+            <img src="/assets/bandeiras/{{usuario.partido.bandeira}}" alt="" width="50" height="50">
+          </div>
+          <div class="col">
+            <div class="row">
+              {{usuario.nome}}
+            </div>
+            <div class="row">
+              {{usuario.partido.sigla}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
   <!-- Input -->
   <div class="card mt-1">
     <div class="card-header">
