@@ -69,14 +69,14 @@ export class RegistrardumbComponent implements OnInit {
     }
 
     onSelectFile(ft: Event) {
-      debug("registrardumb > ",ft);
+      debug("registrardumb > ", ft);
 
       // @ts-ignore
       if (ft.srcElement.files.length > 0) {
         // @ts-ignore
         let arquivo = ft.srcElement.files[0] as File;
         let form = new FormData();
-        form.append('foto', arquivo, arquivo.name)
+        form.append('foto', arquivo, arquivo.name);
         this.foto = form;
       }
     }

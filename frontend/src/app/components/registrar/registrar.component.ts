@@ -36,17 +36,18 @@ export class RegistrarComponent implements OnInit {
 
     debug(fotox);
 
-    let foto = await this.fotoService.create(fotox);
+    let usr = await this.registroService.create(usuario);
+    let foto = await this.fotoService.create(usr.id, fotox);
+
     debug('foto > ', foto);
 
-    if (usuario.fotos != undefined)
-        usuario.fotos.push(foto);
+    if (usuario.foto != undefined)
+        usuario.foto.push(foto);
     else {
-        usuario.fotos = [];
-        usuario.fotos.push(foto);
+        usuario.foto = [];
+        usuario.foto.push(foto);
     }
 
-    let usr = await this.registroService.create(usuario);
     this.auth.setUsuario(usr);
 
     debug('Usuário cadastrado > ', usr);

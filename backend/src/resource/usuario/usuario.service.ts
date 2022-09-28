@@ -50,7 +50,11 @@ export class UsuarioService {
     return this.usuarioRepository.find({where: {
       login,
       senha
-    }});
+    },
+  relations: {
+    foto: true,
+    partido: true,
+  }});
   }
 
   update(id: number, updateUsuarioDto: UpdateUsuarioDto) {

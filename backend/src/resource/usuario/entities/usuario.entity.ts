@@ -19,7 +19,7 @@ export class Usuario {
     @Column()
     senha: string;
 
-    @OneToMany((type) => Foto, (foto) => foto.usuario)
+    @OneToMany((type) => Foto, (foto) => foto.usuario, { eager: true })
     foto: Foto[];
 
     @OneToMany((type) => Feed, (feed) => feed.usuario)

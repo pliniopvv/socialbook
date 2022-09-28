@@ -4,23 +4,27 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { debug, env } from 'src/utils/utils.tools';
 import { CreateFotoDto } from './dto/create-foto.dto';
 import * as fs from 'fs';
+import { Usuario } from '../usuario/entities/usuario.entity';
 
 @Controller('foto')
 export class FotoController {
   constructor(private readonly fotoService: FotoService) {}
 
-  @Post()
+  @Post(':id')
   @UseInterceptors(FileInterceptor('foto', {
     dest: env('DIR_UPLOAD')
   }))
-  create(@UploadedFile() foto: Express.Multer.File) {
+  create(@Param('id') id: number, @UploadedFile() foto: Express.Multer.File) {
     // @ts-ignore
     debug(0,__filename, foto);
+
+    let u = new Usuario();
+    u.id = id;
 
     let c = new CreateFotoDto();
     c.arquivo = foto.filename;
     c.originalName = foto.originalname;
-    c.usuario = null;
+    c.usuario = u;
 
     return this.fotoService.create(c);
   }

@@ -6,6 +6,6 @@ export class Usuario {
   nome: string;
   apelido: string;
   senha: string;
-  fotos: Foto[];
+  foto: Foto[];
   partido: Partido;
 }

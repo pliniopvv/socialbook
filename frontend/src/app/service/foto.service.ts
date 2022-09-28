@@ -13,8 +13,8 @@ export class FotoService {
 
   constructor(private http: HttpClient) { }
 
-  async create(form: FormData) {
-    return await firstValueFrom(this.http.post<Foto>(this.API, form));
+  async create(id:number, form: FormData) {
+    return await firstValueFrom(this.http.post<Foto>(this.API+`/${id}`, form));
   }
 
   async find(id: number) {
