@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col d-flex justify-content-center">
             <!-- FOTO -->
-            <ng-container *ngIf="usuario.foto; else nopic">
+            <ng-container *ngIf="usuario.foto.length > 0; else nopic">
               <img src="{{ URL_PICTURE }}/{{ usuario.foto[0].arquivo }}" class="" alt="" width="50" height="50">
             </ng-container>
             <ng-template #nopic>
