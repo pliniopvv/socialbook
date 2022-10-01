@@ -6,6 +6,7 @@ import { UsuarioModule } from './resource/usuario/usuario.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDatabaseConfig } from './database/database.providers';
 import { FotoModule } from './resource/foto/foto.module';
+import { AuthModule } from './auth/auth.module';
 
 let database = getDatabaseConfig();
 
@@ -17,6 +18,7 @@ let database = getDatabaseConfig();
     PartidoModule,
     UsuarioModule,
     FotoModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

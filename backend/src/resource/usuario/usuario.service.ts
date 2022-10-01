@@ -32,29 +32,32 @@ export class UsuarioService {
     return this.usuarioRepository.find();
   }
 
-  findOne(id: number) {
-    return this.usuarioRepository.findOneBy({ id });
+  async findOne(id: number) {
+    const {senha, ...retorno} = await  this.usuarioRepository.findOneBy({ id });
+    return retorno;
   }
 
-  findOneWithPartido(id: number) {
-    return this.usuarioRepository.find({
+  async findOneWithPartido(id: number) {
+    const {senha, ...retorno} = await this.usuarioRepository.findOne({
       where: {
         id
       }, relations: {
         partido: true,
       }
-    })
+    }) as Usuario;
+    return retorno;
   }
 
-  find(login:string, senha: string) {
-    return this.usuarioRepository.find({where: {
+  async find(login: string, _senha: string) {
+    const { senha , ...retorno} = await this.usuarioRepository.findOne({where: {
       login,
-      senha
+      senha: _senha
     },
   relations: {
     foto: true,
     partido: true,
-  }});
+  }}) as Usuario;
+  return retorno;
   }
 
   update(id: number, updateUsuarioDto: UpdateUsuarioDto) {

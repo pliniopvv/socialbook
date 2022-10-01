@@ -1,15 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Response } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Response, UseGuards } from '@nestjs/common';
 import { FotoService } from './foto.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { debug, env } from 'src/utils/utils.tools';
 import { CreateFotoDto } from './dto/create-foto.dto';
 import * as fs from 'fs';
 import { Usuario } from '../usuario/entities/usuario.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('foto')
 export class FotoController {
   constructor(private readonly fotoService: FotoService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post(':id')
   @UseInterceptors(FileInterceptor('foto', {
     dest: env('DIR_UPLOAD')
@@ -29,6 +31,7 @@ export class FotoController {
     return this.fotoService.create(c);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':filename')
   findOneFile(@Param('filename') filename: string, @Response() res) {
     if (env("DEBUG")) debug(0,"GET /file/:filename >", filename);
@@ -45,6 +48,7 @@ export class FotoController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.fotoService.remove(+id);
