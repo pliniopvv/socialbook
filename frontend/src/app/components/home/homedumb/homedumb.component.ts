@@ -1,10 +1,9 @@
+import { Pagination } from './../model/pagination';
 import { Router } from '@angular/router';
 import { debug } from 'src/app/utils/utils.tools';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Feed } from 'src/app/model/feed';
 import { Usuario } from 'src/app/model/usuario';
-import { FeedService } from 'src/app/service/feed.service';
-import { UsuariosService } from 'src/app/service/usuarios.service';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { environment } from 'src/environments/environment';
 
@@ -13,11 +12,15 @@ import { environment } from 'src/environments/environment';
   templateUrl: './homedumb.component.html',
   styleUrls: ['./homedumb.component.scss']
 })
-export class HomedumbComponent implements OnInit {
+export class HomedumbComponent implements OnInit, OnChanges {
 
   @Input() usuario: Usuario;
   @Output() postar = new EventEmitter();
+  @Output() changePage = new EventEmitter();
   @Input() feeds: Feed[];
+  @Input() paginacao: Pagination;
+
+  @ViewChild('paginationElement') paginacaoHtml: ElementRef;
 
   post: string = "";
 
@@ -36,6 +39,10 @@ export class HomedumbComponent implements OnInit {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+      this.makePagination();
+  }
+
   async onPostar() {
     if (this.post?.length < 3)
       return;
@@ -52,6 +59,49 @@ export class HomedumbComponent implements OnInit {
   openPost(id: number) {
     this.router.navigate([`feed/${id}`])
     debug('Abrir postagem: ', id);
+  }
+
+  makePagination() {
+    if (this.paginacao == null) {
+      return;
+    }
+    let ref = this.paginacaoHtml.nativeElement;
+    ref.innerHTML = "";
+
+    for (let i = 1; i <= this.paginacao.totalPages; i++) {
+        let li = document.createElement('li');
+        li.classList.add('page-item')
+
+        if (this.paginacao.currentPage == i) {
+        li.classList.add('active')
+
+        let span = document.createElement('span');
+        span.classList.add('page-link');
+
+        span.appendChild(document.createTextNode(i.toString()));
+        li.appendChild(span);
+        ref.appendChild(li);
+      } else {
+        let a = document.createElement('a');
+        a.classList.add('page-link');
+        a.appendChild(document.createTextNode(i.toString()));
+
+        li.appendChild(a);
+        li.addEventListener('click', () => this.setPage(i));
+
+        ref.appendChild(li);
+      }
+
+        // r += `<li class="page-item active" aria-current="page">
+        //         <span class="page-link">${i}</span>
+        //       </li>`;
+      // else
+        // r += `<li class="page-item" (click)="setPage(${i})"><a class="page-link">${i}</a></li>`;
+    }
+  }
+
+  setPage(page: number) {
+    this.changePage.emit({page});
   }
 
 }

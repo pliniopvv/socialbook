@@ -5,6 +5,7 @@ import { Repository, DataSource } from 'typeorm';
 import { CreateFeedDto } from './dto/create-feed.dto';
 import { UpdateFeedDto } from './dto/update-feed.dto';
 import { Feed } from './entities/feed.entity';
+import { IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class FeedService {
@@ -26,11 +27,15 @@ export class FeedService {
     return this.dataSource.manager.save(f);
   }
 
-  findAll() {
-    return this.feedRepository.find({order: {
-        create_at: 'DESC'
-      }
-    });
+  async findAll(options: IPaginationOptions) {
+    const queryBuilder = this.feedRepository.createQueryBuilder('f');
+
+    queryBuilder.orderBy('f.id','DESC');
+    queryBuilder.leftJoinAndSelect('f.usuario','Usuario');
+    queryBuilder.leftJoinAndSelect('Usuario.partido','Partido')
+    queryBuilder.leftJoinAndSelect('f.comments','Comments');
+
+    return paginate<Feed>(queryBuilder, options);
   }
 
   findOne(id: number) {

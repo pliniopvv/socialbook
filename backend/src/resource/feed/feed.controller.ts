@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { FeedService } from './feed.service';
 import { CreateFeedDto } from './dto/create-feed.dto';
 import { UpdateFeedDto } from './dto/update-feed.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ApiQuery } from '@nestjs/swagger';
+import { Pagination } from 'nestjs-typeorm-paginate';
+import { Feed } from './entities/feed.entity';
 
 @Controller('feed')
 export class FeedController {
@@ -16,8 +19,12 @@ export class FeedController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.feedService.findAll();
+  findAll(
+    @Query('page') page = 1,
+    @Query('limit') limit = 100 
+  ): Promise<Pagination<Feed>> {
+    limit = limit > 100 ? 100 : limit;
+    return this.feedService.findAll({page, limit});
   }
 
   @UseGuards(JwtAuthGuard)
