@@ -27,11 +27,11 @@ export class AuthenticationService {
     sessionStorage.setItem('usuario',JSON.stringify(usuario));
   }
 
-  async setToken(token: string) {
+  setToken(token: string) {
     localStorage.setItem('token',token);
   }
 
-  async getToken() {
+  getToken() {
     return localStorage.getItem('token');
   }
 }

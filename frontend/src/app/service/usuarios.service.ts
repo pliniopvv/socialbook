@@ -30,4 +30,8 @@ export class UsuariosService {
     return await firstValueFrom(this.http.delete<Usuario>(this.API+`/${id}`));
   }
 
+  async me() {
+    return await firstValueFrom(this.http.get<Usuario>(this.API+'/me'));
+  }
+
 }

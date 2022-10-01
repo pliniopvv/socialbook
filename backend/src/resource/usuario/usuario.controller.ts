@@ -39,7 +39,8 @@ export class UsuarioController {
   @Get(':id')
   findOne(@Param('id') id: string, @Request() req) {
     if (id == 'me')
-      return req.user;
+      // @ts-ignore
+      return this.usuarioService.findOne(req.user.id);
     return this.usuarioService.findOne(+id);
   }
 
