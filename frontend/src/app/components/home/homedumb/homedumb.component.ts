@@ -104,4 +104,11 @@ export class HomedumbComponent implements OnInit, OnChanges {
     this.changePage.emit({page});
   }
 
+
+  onLogout() {
+    this.auth.setUsuario(null);
+    this.auth.setToken(null);
+    this.router.navigate(['login']);
+  }
+
 }
